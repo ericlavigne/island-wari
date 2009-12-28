@@ -85,16 +85,13 @@
        (or (serve-file (params :*)) :next))
   (GET "/"
        (html [:h1 "Welcome to the Island Wari game server."]
-	     [:a {:href (board-route 1 
-				     (apply concat 
-					    (repeat 2 
-						    (concat (repeat 6 4) [0]))))} 
+	     [:a {:href (board-route 
+			 1 
+			 (apply concat (repeat 2 (concat (repeat 6 4) [0]))))} 
 	      "New game"]))
-  (GET "/:whosturn/:computerplays/:a/:b/:c/:d/:e/:f/:g/:h/:i/:j/:k/:l/:m/:n"
+  (GET "/:whosturn/:computerplays/:x/:x/:x/:x/:x/:x/:x/:x/:x/:x/:x/:x/:x/:x"
        (let [turn (Integer/parseInt (params :whosturn))
-	     board (map #(Integer/parseInt (params %))
-				  [:a :b :c :d :e :f :g 
-				   :h :i :j :k :l :m :n])]
+	     board (map #(Integer/parseInt %) (params :x))]
 	 (html 
 	  (if (or (= turn 1) (= turn 2))
 	    (render-board turn board)
