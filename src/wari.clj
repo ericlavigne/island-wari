@@ -4,9 +4,6 @@
 (defn where-stones-fall [start skip stones]
   (take stones (remove #(= skip %) (drop (inc start) (cycle (range 14))))))
 
-(defn last-stone-falls [start skip stones]
-  (last (where-stones-fall start skip stones)))
-
 (defn bin-to-skip [turn]
   (if (= turn 1) 13 6))
 
@@ -53,44 +50,46 @@
 		  {:href (board-route (result :turn) (result :board))} 
 		  [:img {:src (str "/" (nth slots move) ".png")}]]]))] 
     [:table {:width "50%"}
-     (vec (concat [:tr] 
-		  (map #(vector :td %) (interpose horiz (repeat 7 small)))))
-     (vec (concat [:tr [:td vert]] 
-		  (map 
-		   (fn [slot] 
-		     (cond (= slot "vertical") (picname-to-imgcol "vertical")
-			   (= (nth slots slot) 0) (picname-to-imgcol 0)
-			   (= whosturn 2) (picname-to-imgcol (nth slots slot))
-			   :default (slot-to-link slot)))
-		   (interpose "vertical" (reverse (range 6))))
-		  [[:td vert]]))
-     (vec (concat [:tr [:td vert] [:td top]]
-		  (map #(vector :td %) (interpose big (repeat 5 vert)))
-		  [[:td top] [:td vert]]))
-     (vec (concat [:tr [:td vert] (picname-to-imgcol (nth slots 6))]
-		  (map #(vector :td %) (interpose big (repeat 5 vert)))
-		  [(picname-to-imgcol (nth slots 13)) [:td vert]]))
-     (vec (concat [:tr [:td vert] [:td bot]]
-		  (map #(vector :td %) (interpose big (repeat 5 vert)))
-		  [[:td bot] [:td vert]]))
-     (vec (concat [:tr [:td vert]] 
-		  (map 
-		   (fn [slot] 
-		     (cond (= slot "vertical") (picname-to-imgcol "vertical")
-			   (= (nth slots slot) 0) (picname-to-imgcol 0)
-			   (= whosturn 1) (picname-to-imgcol (nth slots slot))
-			   :default (slot-to-link slot)))
-		   (interpose "vertical" (range 7 13)))
-		  [[:td vert]]))
-     (vec (concat [:tr] 
-		  (map #(vector :td %) (interpose horiz (repeat 7 small)))))]))
+     [:tr (map #(vector :td %) (interpose horiz (repeat 7 small)))]
+     [:tr [:td vert] 
+      (map 
+       (fn [slot] 
+	 (cond (= slot "vertical") (picname-to-imgcol "vertical")
+	       (= (nth slots slot) 0) (picname-to-imgcol 0)
+	       (= whosturn 2) (picname-to-imgcol (nth slots slot))
+	       :default (slot-to-link slot)))
+       (interpose "vertical" (reverse (range 6))))
+      [:td vert]]
+     [:tr [:td vert] [:td top]
+      (map #(vector :td %) (interpose big (repeat 5 vert)))
+      [:td top] [:td vert]]
+     [:tr [:td vert] (picname-to-imgcol (nth slots 6))
+      (map #(vector :td %) (interpose big (repeat 5 vert)))
+      (picname-to-imgcol (nth slots 13)) [:td vert]]
+     [:tr [:td vert] [:td bot]
+      (map #(vector :td %) (interpose big (repeat 5 vert)))
+      [:td bot] [:td vert]]
+     [:tr [:td vert] 
+      (map 
+       (fn [slot] 
+	 (cond (= slot "vertical") (picname-to-imgcol "vertical")
+	       (= (nth slots slot) 0) (picname-to-imgcol 0)
+	       (= whosturn 1) (picname-to-imgcol (nth slots slot))
+	       :default (slot-to-link slot)))
+       (interpose "vertical" (range 7 13)))
+      [:td vert]]
+     [:tr (map #(vector :td %) (interpose horiz (repeat 7 small)))]    ]))
 
 (defroutes wari-routes
   (GET "/*"
        (or (serve-file (params :*)) :next))
   (GET "/"
        (html [:h1 "Welcome to the Island Wari game server."]
-	     [:a {:href (board-route 1 (apply concat (repeat 2 (concat (repeat 6 4) [0]))))} "New game"]))
+	     [:a {:href (board-route 1 
+				     (apply concat 
+					    (repeat 2 
+						    (concat (repeat 6 4) [0]))))} 
+	      "New game"]))
   (GET "/:whosturn/:computerplays/:a/:b/:c/:d/:e/:f/:g/:h/:i/:j/:k/:l/:m/:n"
        (let [turn (Integer/parseInt (params :whosturn))
 	     board (map #(Integer/parseInt (params %))
