@@ -1,5 +1,6 @@
 (ns wari
-  (:use compojure))
+  (:use compojure)
+  (:gen-class))
 
 (defn where-stones-fall [start skip stones]
   (take stones (remove #(= skip %) (drop (inc start) (cycle (range 14))))))
@@ -99,5 +100,7 @@
   (ANY "*"
        (page-not-found)))
 
-(run-server {:port 8084}
-	    "/*" (servlet wari-routes))
+(defn -main [& args]
+  (run-server 
+   {:port 8084}
+   "/*" (servlet wari-routes)))

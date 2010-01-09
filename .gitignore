@@ -1,2 +1,5 @@
 public/Thumbs.db
 lib
+classes
+*.jar
+*~
