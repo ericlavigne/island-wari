@@ -8,6 +8,7 @@ To build this project yourself, you will need [leiningen](http://zef.me/2470/bui
 
      lein deps
      lein compile
+     lein test
      lein uberjar
      java -jar island-wari-standalone.jar
 
