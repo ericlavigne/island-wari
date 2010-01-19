@@ -4,5 +4,6 @@
   :dependencies [[org.clojure/clojure "1.1.0-master-SNAPSHOT"]
 		 [org.clojure/clojure-contrib "1.1.0-master-SNAPSHOT"]
 		 [org.clojars.liebke/compojure "0.3.1-master"]]
-  :dev-dependencies [[org.clojure/swank-clojure "1.0"]])
+  :dev-dependencies [[org.clojure/swank-clojure "1.0"]
+                     [leiningen-run "0.1"]])
 
