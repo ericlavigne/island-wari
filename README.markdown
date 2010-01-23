@@ -7,8 +7,9 @@ You can try out the game server on [my website](http://ericlavigne.net:8054).
 To build this project yourself, you will need [leiningen](http://zef.me/2470/building-clojure-projects-with-leiningen).
 
      lein deps
-     lein compile
      lein test
+     lein run
+     lein compile
      lein uberjar
      java -jar island-wari-standalone.jar
 
