@@ -101,6 +101,7 @@
        (page-not-found)))
 
 (defn -main [& args]
-  (run-server 
-   {:port 8084}
-   "/*" (servlet wari-routes)))
+  (let [port (if (empty? args) 8084 (Integer/parseInt (first args)))]
+    (run-server 
+     {:port port}
+     "/*" (servlet wari-routes))))

@@ -3,6 +3,7 @@
   :main wari
   :dependencies [[org.clojure/clojure "1.1.0-master-SNAPSHOT"]
 		 [org.clojure/clojure-contrib "1.1.0-master-SNAPSHOT"]
-		 [org.clojars.liebke/compojure "0.3.1-master"]]
+		 [org.clojars.liebke/compojure "0.3.1-master"]
+		 [leiningen-run "0.2"]]
   :dev-dependencies [[org.clojure/swank-clojure "1.0"]])
 
